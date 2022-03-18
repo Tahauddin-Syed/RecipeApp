@@ -12,7 +12,6 @@ public class Notes {
     private Long id;
 
     @OneToOne
-    @Column(name = "RECIPE")
     private Recipe recipe;
 
     @Lob
