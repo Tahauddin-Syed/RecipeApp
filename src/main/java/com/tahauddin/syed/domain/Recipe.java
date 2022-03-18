@@ -2,6 +2,8 @@ package com.tahauddin.syed.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Table(name = "RECIPE_TBL")
 @Entity
@@ -34,11 +36,22 @@ public class Recipe implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
+    
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "recipe", cascade = CascadeType.ALL)
+    private Set<Ingredient> ingredientSet = new HashSet<>();
+
+    public void setIngredientSet(Set<Ingredient> ingredientSet) {
+        this.ingredientSet = ingredientSet;
+    }
+
+    public Set<Ingredient> getIngredientSet() {
+        return ingredientSet;
+    }
 
     public Recipe() {
     }
 
-    public Recipe(Long id, String description, Integer prepTime, Integer cookTime, Integer servings, String source, String url, String directions, Byte[] image, Notes notes) {
+    public Recipe(Long id, String description, Integer prepTime, Integer cookTime, Integer servings, String source, String url, String directions, Byte[] image, Notes notes, Set<Ingredient> ingredientSet) {
         this.id = id;
         this.description = description;
         this.prepTime = prepTime;
@@ -49,6 +62,7 @@ public class Recipe implements Serializable {
         this.directions = directions;
         this.image = image;
         this.notes = notes;
+        this.ingredientSet = ingredientSet;
     }
 
     public Long getId() {
