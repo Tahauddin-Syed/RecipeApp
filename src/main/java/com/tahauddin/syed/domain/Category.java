@@ -3,15 +3,17 @@ package com.tahauddin.syed.domain;
 import javax.persistence.*;
 import java.util.Set;
 
-/**
- * Created by jt on 6/13/17.
- */
+
 @Entity
+@Table(name = "CATEGORY_TBL")
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
+
+    @Column(name = "DESCRIPTION")
     private String description;
 
     @ManyToMany(mappedBy = "categories")
