@@ -1,15 +1,20 @@
 package com.tahauddin.syed.domain;
 
+import com.tahauddin.syed.domain.enumaration.Difficulty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+import static javax.persistence.EnumType.STRING;
 
 @Table(name = "RECIPE_TBL")
 @Entity
 public class Recipe implements Serializable {
 
     private static final long serialVersionUID = -960336907225300498L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
@@ -17,18 +22,27 @@ public class Recipe implements Serializable {
 
     @Column(name = "IDESCRIPTIOND")
     private String description;
+
     @Column(name = "PREP_TIME")
     private Integer prepTime;
+
     @Column(name = "COOK_TIME")
     private Integer cookTime;
+
     @Column(name = "SERVINGS")
     private Integer servings;
+
     @Column(name = "SOURCE")
     private String source;
+
     @Column(name = "URL")
     private String url;
+
     @Column(name = "DIRECTIONS")
     private String directions;
+
+    @Enumerated(value = STRING)
+    private Difficulty difficulty;
 
     @Lob
     @Column(name = "IMAGE")
@@ -39,6 +53,12 @@ public class Recipe implements Serializable {
     
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "recipe", cascade = CascadeType.ALL)
     private Set<Ingredient> ingredientSet = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories;
 
     public void setIngredientSet(Set<Ingredient> ingredientSet) {
         this.ingredientSet = ingredientSet;
@@ -143,5 +163,13 @@ public class Recipe implements Serializable {
 
     public void setNotes(Notes notes) {
         this.notes = notes;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 }
