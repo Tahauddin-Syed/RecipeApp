@@ -3,6 +3,8 @@ package com.tahauddin.syed.domain;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
+import static javax.persistence.FetchType.EAGER;
+
 @Entity
 @Table(name = "INGREDIENT")
 public class Ingredient {
@@ -19,8 +21,11 @@ public class Ingredient {
     private BigDecimal amount;
     
     @ManyToOne
-    @JoinColumn(name = "recipe_id")
+    @JoinColumn()
     private Recipe recipe;
+
+    @OneToOne(fetch = EAGER)
+    private UnitOfMeasure unitOfMeasure;
 
     public Recipe getRecipe() {
         return recipe;
