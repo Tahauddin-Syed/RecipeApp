@@ -10,4 +10,5 @@ public class RecipeAppApplication {
         SpringApplication.run(RecipeAppApplication.class, args);
     }
 
+
 }
